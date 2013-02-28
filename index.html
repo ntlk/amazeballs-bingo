@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Amazballs bingo</title>
+		<style>
+			body {
+				color:#98f6a3;
+				background:#000 url('http://amazeballs.be//img/spacecat.jpg') center center fixed;
+				background-repeat:no-repeat;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+				font-family: Courier, "Courier New", monospace; 
+				font-size:100%;
+				text-align:center;
+				text-shadow: black 0.1em 0.1em 0.2em;
+			}
+			#bingo {
+				max-width: 60%;
+				margin: 3em auto;
+			}
+			.bingo-term {
+				width: 30%;
+				display: inline-block;
+				float: left;
+				padding: 2em 0;
+				background: rgba(255,255,255, 0.3);
+			}
+			.bingo-term:hover, .is-selected {
+				background: #98f6a3;
+				color: #fff;
+				cursor: pointer;
+			}
+		</style>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script>
+
+			Array.prototype.remove = function() {
+	    var what, a = arguments, L = a.length, ax;
+			    while (L && this.length) {
+			        what = a[--L];
+			        while ((ax = this.indexOf(what)) !== -1) {
+			            this.splice(ax, 1);
+			        }
+			    }
+			    return this;
+			};
+
+
+			var bingo_words = ['Lean', 'Agile', 'Internet of Things', '3D printer/printing', 'Lasers', 'Space Travel', 'CERN', 'Tom Scott', 'Ruby drama', 'Synergize', 'Uncanny valley', 'Skeumorphism', 'Trello', 'Silicon roundabout', 'Tech city', 'Awesome', 'Brogramming', 'Shoreditch', 'Longboarding', 'Fuck it, ship it', 'Wow', 'Cats', 'Found it on Twitter', 'Monetise', 'Google Glass'];
+
+			var selected_words = [];
+
+			var generated_card = "";
+
+			function select_a_term(arr, selected) {
+				var word_count = arr.length;
+				var random = Math.floor(Math.random()*word_count);
+				selected.push(arr[random]);
+				arr.remove(arr[random]);
+			}
+
+			for (var i = 0; i < 9; i++) {
+				select_a_term(bingo_words, selected_words);
+			}
+
+
+			$.each(selected_words, function(index, value){
+				generated_card = generated_card + '<div class="bingo-term">'+ value +'</div>';
+			});
+
+
+			$(document).ready(function(){
+				$('#bingo').append(generated_card);
+
+				$('.bingo-term').on('click', function(){
+					$(this).toggleClass('is-selected');
+				});
+			});
+
+		</script>
+	</head>
+	<body>
+		<div id="bingo"></div>
+	</body>
+</html>
